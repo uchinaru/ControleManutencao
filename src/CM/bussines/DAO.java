@@ -5,15 +5,21 @@ import java.sql.PreparedStatement;
 
 public class DAO{
 	
-	public void inserirPlaca(String Placa, String Tipo){
+	public void novoCadastro(String placa, String tipo, String modelo, String fabricante, String kmAtual, float kmProximaManut){
 		
 		try {
 			
 			Connection conexao = Conexao.getConexao();
-			String sql ="INSERT INTO veiculos (placa,tipoVeiculo) VALUES ('"+Placa+"', '"+Tipo+"')";
+			String sql ="INSERT INTO veiculos (placa,tipoVeiculo,modeloMarca,fabricante,kmAtual,kmProximaManutencao) VALUES (?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conexao.prepareStatement(sql);
-			pstmt.execute();
+			pstmt.setString(1, placa);
+			pstmt.setString(2, tipo);
+			pstmt.setString(3, modelo);
+			pstmt.setString(4, fabricante);
+			pstmt.setString(5, kmAtual);
+			pstmt.setFloat(6, kmProximaManut);
+			pstmt.executeUpdate();
 			conexao.close();
 			}
 		
@@ -22,20 +28,5 @@ public class DAO{
 		}
 	};
 
-	public void inserirTipoVeiculo(String Tipo) {
-		
-		try {
-		Connection conexao = Conexao.getConexao();
-		String sql ="INSERT INTO veiculos (tipoVeiculo) VALUES ('"+Tipo+"')";
-		
-		PreparedStatement pstmt = conexao.prepareStatement(sql);
-		pstmt.executeUpdate(sql);
-		conexao.close();
-		} 
-		
-		catch (Exception e) {
-			System.out.println("Erro ao inserir");
-		}
-	};
 	
 }
