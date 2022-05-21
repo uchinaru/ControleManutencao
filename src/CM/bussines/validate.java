@@ -8,35 +8,64 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mysql.fabric.xmlrpc.base.Value;
+
 public class validate {
-	
-	public boolean validaPlaca(String placa) throws IOException, SQLException {
+
+	public boolean validaPlaca(String Placa) throws IOException, SQLException {
+
 		boolean validador = false;
-		
-		Connection conexao = Conexao.getConexao();
-		String query = "SELECT * FROM veiculos where (placa) ='"+placa+"'";
-		PreparedStatement stmt = conexao.prepareStatement(query);
-		ResultSet sr = stmt.executeQuery(query);
-		
-		List<String> placaVeiculo = new ArrayList<String>();
-		
-		while (sr.next()) {
-			
-			placaVeiculo.add(query);
+		if (Placa.isEmpty() || Placa.isBlank()) {
+			System.out.println("Preencha o campo da placa.");
+			validador = false;
 		}
-		
-		for (String string : placaVeiculo) {
-			string.contains(placa);
-			validador=true;
+
+		else {
+
+			Connection conexao = Conexao.getConexao();
+
+			String query = "SELECT * FROM veiculos where (placa) ='" + Placa + "'";
+			PreparedStatement stmt = conexao.prepareStatement(query);
+			ResultSet sr = stmt.executeQuery(query);
+
+			List<String> placaVeiculo = new ArrayList<String>();
+
+			while (sr.next()) {
+
+				placaVeiculo.add(query);
 			}
-		return validador;
+
+			for (String string : placaVeiculo) {
+				string.contains(Placa);
+				validador = true;
+			}
 		}
-	
-	
-	public boolean validaModelo() {
-		
-		
-		return true;
+		return validador;
+	}
+
+	public boolean validaTipoVeiculo(String Modelo) {
+		boolean validador = true;
+
+		// Futuramente irei migrar estes dados dos veiculos para uma nova tabela no
+		// banco de dados.
+		if ("CARRO".equalsIgnoreCase(Modelo) || "MOTO".equalsIgnoreCase(Modelo) || "CAMINHAO".equalsIgnoreCase(Modelo)
+				|| "VAN".equalsIgnoreCase(Modelo)) {
+			validador = true;
+		} else {
+			validador = false;
+		}
+		return validador;
 	};
 
+	public boolean validaKmAtual(String km) {
+
+		if (km.isEmpty() || km.isBlank() || km.length() > 7) {
+
+			return false;
+		} else {
+
+			return true;
+		}
+
+	}
 }

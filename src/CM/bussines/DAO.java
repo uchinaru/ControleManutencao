@@ -1,48 +1,32 @@
 package CM.bussines;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
 public class DAO{
 	
-	public String inserirPlaca(String placa) throws IOException {
+	public void novoCadastro(String placa, String tipo, String modelo, String fabricante, String kmAtual, float kmProximaManut){
 		
 		try {
 			
-			if ( placa.isEmpty() || placa.isBlank()) {
-				
-				System.out.println("Campo nulo ou vazio.");
-			} 
-			else {
 			Connection conexao = Conexao.getConexao();
-			String sql ="INSERT INTO veiculos (placa) VALUES ('"+placa+"')";
+			String sql ="INSERT INTO veiculos (placa,tipoVeiculo,modeloMarca,fabricante,kmAtual,kmProximaManutencao) VALUES (?,?,?,?,?,?)";
 			
 			PreparedStatement pstmt = conexao.prepareStatement(sql);
-			pstmt.execute();
+			pstmt.setString(1, placa);
+			pstmt.setString(2, tipo);
+			pstmt.setString(3, modelo);
+			pstmt.setString(4, fabricante);
+			pstmt.setString(5, kmAtual);
+			pstmt.setFloat(6, kmProximaManut);
+			pstmt.executeUpdate();
 			conexao.close();
-			} 
-		}
+			}
+		
 			catch (Exception e) {
 			System.out.println("Erro ao inserir");
 		}
-		return placa;
 	};
 
-	public void  inserirModelo(String modelo) {
-		
-		try {
-		Connection conexao = Conexao.getConexao();
-		
-		String sql ="INSERT INTO veiculos (modelo) VALUES ('"+modelo+"')";
-		PreparedStatement pstmt = conexao.prepareStatement(sql);
-		pstmt.execute();
-		conexao.close();
-		} 
-		catch (Exception e) {
-			System.out.println("Erro ao inserir");
-		}
-		
-	};
 	
 }

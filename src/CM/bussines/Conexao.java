@@ -10,7 +10,7 @@ public class Conexao {
 public static Connection getConexao() throws IOException{
 	
 	try {
-		String url ="jdbc:mysql://localhost:3306/manutencao";
+		String url ="jdbc:mysql://localhost:3306/manutencao?autoReconnect=true&useSSL=false";
 		String user="root";
 		String senha="40593413";
 		
