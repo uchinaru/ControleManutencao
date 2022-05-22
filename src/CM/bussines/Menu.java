@@ -48,12 +48,14 @@ public class Menu {
 
 			float kmProximaManut = 0;
 			if (!"MOTO".equalsIgnoreCase(tipoVeiculo)) {
-				kmProximaManut = (float) 10.000;
+				kmProximaManut += Float.parseFloat(kmAtualVeiculo);
+				kmProximaManut += (float) 10.000;
 
 				dao.novoCadastro(placaVeiculo, tipoVeiculo, modeloVeiculo, fabricanteVeiculo, kmAtualVeiculo,
 						kmProximaManut);
 			} else {
-				kmProximaManut = (float) 1.000;
+				kmProximaManut += Float.parseFloat(kmAtualVeiculo);
+				kmProximaManut += (float) 1.000;
 
 				dao.novoCadastro(placaVeiculo, tipoVeiculo, modeloVeiculo, fabricanteVeiculo, kmAtualVeiculo,
 						kmProximaManut);
